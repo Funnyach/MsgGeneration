@@ -1,0 +1,123 @@
+#pragma once
+
+#include "ROSBridgeSrv.h"
+
+namespace $packagename
+{
+	class $srvname : public FROSBridgeSrv
+	{
+	public:
+		$srvname()
+		{
+			SrvType = TEXT("$packagename/$srvname");
+		}
+
+		class Request : public SrvRequest
+		{
+		private:
+			$reqprivatevariables
+					
+		public:
+			Request(){ }
+			$reqconstructor
+			
+			
+			$reqgetters
+			
+			
+			$reqsetters
+			
+			virtual void FromJson(TSharedPtr<FJsonObject> JsonObject) override
+			{
+				$reqfromjson
+			}
+			
+			virtual void FromBson(TSharedPtr<FBsonObject> BsonObject) override
+			{
+				$reqfrombson
+			}
+			
+			static Request GetFromJson(TSharedPtr<FJsonObject> JsonObject)
+			{
+				Request Req;
+				Req.FromJson(JsonObject);
+				return Req;
+			}
+			
+			static Request GetFromBson(TSharedPtr<FBsonObject> BsonObject)
+			{
+				Request Req;
+				Req.FromBson(BsonObject);
+				return Req;
+			}
+			
+//			### TOSTRING ###
+			
+			virtual TSharedPtr<FJsonObject> ToJsonObject() const
+			{
+				$reqtojsonobject
+			}
+			
+			virtual TSharedPtr<FBsonObject> ToBsonObject() const
+			{
+				$reqtobsonobject
+			}
+		};
+		
+		class Response : public SrvResponse
+		{
+		private:
+			$resprivatevariables
+			
+			
+		public:
+			Response(){ }
+			$resconstructor
+			
+			
+			$resgetters
+			
+			
+			$ressetters
+			
+			
+			virtual void FromJson(TSharedPtr<FJsonObject> JsonObject) override
+			{
+				$resfromjson
+			}
+			
+			virtual void FromBson(TSharedPtr<FBsonObject> BsonObject) override
+			{
+				$resfrombson
+			}
+			
+			static Request GetFromJson(TSharedPtr<FJsonObject> JsonObject)
+			{
+				Response Resp;
+				Resp.FromJson(JsonObject);
+				return Resp;
+			}
+			
+			static Response GetFromBson(TSharedPtr<FBsonObject> BsonObject)
+			{
+				Response Resp; 
+				Resp.FromBson(BsonObject);
+				return Resp;
+			}			
+			
+//			### TOSTRING ###
+			
+			virtual TSharedPtr<FJsonObject> ToJsonObject() const
+			{
+				$restojsonobject
+			}
+			
+			virtual TSharedPtr<FBsonObject> ToBsonObject() const
+			{
+				$restobsonobject
+			}
+		};
+		
+	};
+	
+}
