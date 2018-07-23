@@ -11,4 +11,4 @@ float NumberField
 double NumberField
 FRosTime ObjectField
 FString StringField
-uint8_t NumberField
+int8 NumberField

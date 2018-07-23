@@ -142,7 +142,7 @@ def MakeVariableArray(MsgContent):
 
 
 def GenIncludes(Variables):
-    IncludeList = ["#pragma once\n\n", "#include \"ROSBridgeMsg.h\"\n\n", "#include \"FBson.h\"\n\n"]
+    IncludeList = ["#pragma once\n\n", "#include \"ROSBridgeMsg.h\"\n\n"]
     for Variable in Variables:
         if(not(Variable.GetType() in BaseTypes or Variable.GetType() in ConversionChart[:,1])):
             IncludeList.append('#include "' + Variable.GetType().replace('::', '/') + '.h"\n')
