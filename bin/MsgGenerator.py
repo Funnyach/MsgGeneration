@@ -96,8 +96,15 @@ jt.close()
 def MakeVariableArray(MsgContent):
     OutArray = []
     for i in range(0, len(MsgContent)):
+        MsgContent[i] = ' '.join(MsgContent[i].split())
+        if(not MsgContent[i] or MsgContent[i][0] == '#'):
+            continue
         if(MsgContent[i].count('#') >= 1):
             SplitLine = MsgContent[i].split('#')[0].rstrip().split(' ')
+            if(MsgContent[i].split('#')[0]):
+                AddToArray = True
+            else:
+                AddToArray = False
         else:
             SplitLine = MsgContent[i].rstrip().split(' ')
         NewVariable = Variable()
@@ -133,7 +140,8 @@ def MakeVariableArray(MsgContent):
             NewVariable.SetJsonType( JsonTypes[LocalJT.index(NewVariable.GetType())][1] )
         else:
             NewVariable.SetJsonType( 'ObjectField' )
-        OutArray.append(NewVariable)
+        if(AddToArray):
+            OutArray.append(NewVariable)
     return OutArray
 
 

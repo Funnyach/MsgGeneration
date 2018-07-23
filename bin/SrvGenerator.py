@@ -113,6 +113,9 @@ md.close
 def MakeVariableArray(MsgContent):
     OutArray = []
     for i in range(0, len(MsgContent)):
+        MsgContent[i] = ' '.join(MsgContent[i].split())
+        if(not MsgContent[i] or MsgContent[i][0] == '#'):
+            continue
         if(MsgContent[i].count('#') >= 1):  
             SplitLine = MsgContent[i].split('#')[0].rstrip().split(' ')
         else:
