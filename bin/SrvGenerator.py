@@ -278,7 +278,7 @@ def GenToJsonObject(Variables):
                 ToJsonObject += '\t' + Variable.GetName() + 'Array.Add(MakeShareable(new FJsonValue' + Variable.GetJsonType()[:-5] + '(val.ToJsonObject())));\n'+ '\t' * Indent
             else:
                 ToJsonObject += '\t' + Variable.GetName() + 'Array.Add(MakeShareable(new FJsonValue' + Variable.GetJsonType()[:-5] + '(val)));\n'+ '\t' * Indent
-            ToJsonObject += 'Object->SetArrayField(TEXT("' + Variable.GetName().lower() + '"), ' + Variable.GetName() + 'Array);\n'
+            ToJsonObject += 'Object->SetArrayField(TEXT("' + Variable.GetOriginalName() + '"), ' + Variable.GetName() + 'Array);\n'
 
         else:
             if(Variable.GetJsonType() == 'ObjectField'):

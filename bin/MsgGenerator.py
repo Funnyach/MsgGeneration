@@ -24,7 +24,7 @@ class Variable:
         if(OriginalName.count('_') >= 1):
             self._Name = self.ConvertName(OriginalName)
         else:
-            self._Name = OriginalName
+            self._Name = OriginalName.title()
     def SetType(self, Type):
         self._Type = Type
     def SetIsArray(self, IsArray):
@@ -215,7 +215,7 @@ def GenGettersAndSetters(Variables):
             GettersAndSetters.append('TArray<' + Variable.GetType() + '> Get' + Variable.GetName() + '() const\n')
         else:
             GettersAndSetters.append(Variable.GetType() + ' Get' + Variable.GetName() + '() const\n')
-        GettersAndSetters.append('}\n')
+        GettersAndSetters.append('{\n')
         GettersAndSetters.append('\treturn ' + Variable.GetName() + ';\n')
         GettersAndSetters.append('}\n\n')
 
@@ -225,7 +225,7 @@ def GenGettersAndSetters(Variables):
             GettersAndSetters.append('void Set' + Variable.GetName() + '(TArray<' + Variable.GetType() + '>& In' + Variable.GetName() + ')\n')
         else:
             GettersAndSetters.append('void Set' + Variable.GetName() + '(' + Variable.GetType() + ' In' + Variable.GetName() + ')\n')
-        GettersAndSetters.append('}\n')
+        GettersAndSetters.append('{\n')
         GettersAndSetters.append('\t' + Variable.GetName() + ' = In' + Variable.GetName() + ';\n')
         GettersAndSetters.append('}\n\n')
 
@@ -285,7 +285,7 @@ def GenToJsonObject(Variables):
                 ToJsonObject.append('\t\t' + Variable.GetName() + 'Array.Add(MakeShareable(new FJsonValue' + Variable.GetJsonType()[:-5] + '(val.ToJsonObject())));\n')
             else:
                 ToJsonObject.append('\t\t' + Variable.GetName() + 'Array.Add(MakeShareable(new FJsonValue' + Variable.GetJsonType()[:-5] + '(val)));\n')
-            ToJsonObject.append('\tObject->SetArrayField(TEXT("' + Variable.GetName().lower() + '"), ' + Variable.GetName() + 'Array);\n' )
+            ToJsonObject.append('\tObject->SetArrayField(TEXT("' + Variable.GetOriginalName() + '"), ' + Variable.GetName() + 'Array);\n' )
         else:
             if(Variable.GetJsonType() == 'ObjectField'):
                 ToJsonObject.append('\tObject->SetObjectField(TEXT("' + Variable.GetOriginalName() + '"), ' + Variable.GetName() + '.ToJsonObject());\n')
