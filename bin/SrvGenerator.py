@@ -21,8 +21,8 @@ class Variable:
         self._ArrayJsonType = JsonType[:-5]
 
     def SetOriginalName(self, OriginalName):
-        self._OriginalName = OriginalName.lower()
-
+        self._OriginalName = OriginalName
+        
         self._Name = self.ConvertName(OriginalName)
 
         self._NameWithDefault = self._Name + ' = ' + self._DefaultValue
@@ -157,6 +157,13 @@ def MakeVariableArray(MsgContent):
         OutArray.append(NewVariable)
     return OutArray
 
+def GenIncludes(Variables):
+    Indent = 0
+    Includes = ''
+    for Variable in Variables:
+        if(not(Variable.GetType() in BaseTypes or Variable.GetType() in ConversionChart[:,1])):
+            Includes += '#include "' + Variable.GetType().replace('::', '/') + '.h"\n'
+    return Includes
 
 def GenPrivateVariables(Variables):
     Indent = 3
@@ -176,9 +183,12 @@ def GenPrivateVariables(Variables):
     PrivateVariables = PrivateVariables[:-(Indent+1)] # Remove paragraph and indent from last line
     return PrivateVariables
 
-def GenConstructor(Variables):
+def GenConstructor(Variables, IsReq):
     Indent = 4
-    Constructor = 'Request('
+    if(IsReq):
+        Constructor = 'Request('
+    else:
+        Constructor = 'Response('
 
     for Variable in Variables: 
         if(Variable.IsArray()):
@@ -312,9 +322,9 @@ def Main(Package, Name):
                 ResVariables = MakeVariableArray(SrvTemplateContent[SrvTemplateContent.index('---')+1:])
 
                 # Write the content to the C++ Template provided in the Template folder
-                MainDocument = Template(MainDoc.safe_substitute(packagename=Name, srvname=SrvName))
-                MainDocument = Template(MainDocument.safe_substitute(reqprivatevariables=GenPrivateVariables(ReqVariables), reqconstructor=GenConstructor(ReqVariables), reqsetters=GenSetters(ReqVariables), reqgetters=GenGetters(ReqVariables),reqfromjson=GenFromJson(ReqVariables), reqtojsonobject=GenToJsonObject(ReqVariables)))
-                MainDocument = MainDocument.safe_substitute(resprivatevariables=GenPrivateVariables(ResVariables), resconstructor=GenConstructor(ResVariables), ressetters=GenSetters(ResVariables), resgetters=GenGetters(ResVariables),resfromjson=GenFromJson(ResVariables), restojsonobject=GenToJsonObject(ResVariables))
+                MainDocument = Template(MainDoc.safe_substitute(packagename=Name, srvname=SrvName, includes=(GenIncludes(ReqVariables)+GenIncludes(ResVariables))))
+                MainDocument = Template(MainDocument.safe_substitute(reqprivatevariables=GenPrivateVariables(ReqVariables), reqconstructor=GenConstructor(ReqVariables,True), reqsetters=GenSetters(ReqVariables), reqgetters=GenGetters(ReqVariables),reqfromjson=GenFromJson(ReqVariables), reqtojsonobject=GenToJsonObject(ReqVariables)))
+                MainDocument = MainDocument.safe_substitute(resprivatevariables=GenPrivateVariables(ResVariables), resconstructor=GenConstructor(ResVariables,False), ressetters=GenSetters(ResVariables), resgetters=GenGetters(ResVariables),resfromjson=GenFromJson(ResVariables), restojsonobject=GenToJsonObject(ResVariables))
 
                 if(Package.parent.name == Name):
                     OutputPath = Package / '..' / Name

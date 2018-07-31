@@ -3,3 +3,4 @@ float64 double
 time FROSTime
 string FString
 byte int8
+duration uint32

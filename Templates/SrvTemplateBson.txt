@@ -2,6 +2,8 @@
 
 #include "ROSBridgeSrv.h"
 
+$includes
+
 namespace $packagename
 {
 	class $srvname : public FROSBridgeSrv
@@ -91,7 +93,7 @@ namespace $packagename
 				$resfrombson
 			}
 			
-			static Request GetFromJson(TSharedPtr<FJsonObject> JsonObject)
+			static Response GetFromJson(TSharedPtr<FJsonObject> JsonObject)
 			{
 				Response Resp;
 				Resp.FromJson(JsonObject);

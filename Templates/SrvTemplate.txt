@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ROSBridgeSrv.h"
+$includes
 
 namespace $packagename
 {

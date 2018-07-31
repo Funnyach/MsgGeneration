@@ -20,11 +20,12 @@ class Variable:
         self._DefaultValue = ''
 
     def SetOriginalName(self, OriginalName):
-        self._OriginalName = OriginalName.lower()
+        self._OriginalName = OriginalName
         if(OriginalName.count('_') >= 1):
             self._Name = self.ConvertName(OriginalName)
         else:
             self._Name = OriginalName.title()
+                
     def SetType(self, Type):
         self._Type = Type
     def SetIsArray(self, IsArray):
@@ -106,7 +107,7 @@ def MakeVariableArray(MsgContent):
         NewVariable = Variable()
 
         if(SplitLine[1].count('=') >= 1):
-            NewVariable.SetHasDefault = True
+            NewVariable.SetHasDefault(True)
             NewVariable.SetDefaultValue(SplitLine[1].split('=')[-1])
             NewVariable.SetOriginalName(SplitLine[1].split('=')[0])
         else:
