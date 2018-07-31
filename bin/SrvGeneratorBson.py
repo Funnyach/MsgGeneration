@@ -387,7 +387,7 @@ def Main(Package, Name):
                 
                 Output.close()
     else:
-        print("Folder %s does not exist", Name)
+        print("Folder %s does not exist", Package)
 
 if(__name__ == '__main__'): 
     parser = ap.ArgumentParser(description='Generates UROSBridge compatible C++ files from srv files in a ROS Package.')
