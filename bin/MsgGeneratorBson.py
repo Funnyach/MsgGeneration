@@ -113,8 +113,9 @@ def MakeVariableArray(MsgContent):
             NewVariable.SetHasDefault(False)
             NewVariable.SetOriginalName(SplitLine[1])
 
-        if(SplitLine[0][-2:] == '[]'):
+        if(SplitLine[0][-1:] == ']'):
             NewVariable.SetIsArray(True)
+            SplitLine[0] = SplitLine[0][:SplitLine[0].index('[')] + '[]'
             if(SplitLine[0][:-2] in ConversionChart[:,0]):
                 LocalCC = ConversionChart[:,0].tolist()
                 NewVariable.SetType( ConversionChart[LocalCC.index(SplitLine[0][:-2])][1] )
