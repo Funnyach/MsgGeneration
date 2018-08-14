@@ -1,0 +1,78 @@
+#pragma once
+
+#include "ROSBridgeMsg.h"
+$includes
+
+namespace $packagename
+{
+	class $msgname : public FROSBridgeMsg
+	{
+		$privatevariables
+	public:
+		$msgname()
+		{
+			MsgType = TEXT("$packagename/$msgname");
+		}
+		
+		$constructor
+		{
+			MsgType = TEXT("$packagename/$msgname");
+		}
+
+		~$msgname() override {}
+
+		$getters
+
+		$setters
+
+		virtual void FromJson(TSharedPtr<FJsonObject> JsonObject) override
+		{
+			$fromjson
+		}
+
+		virtual void FromBson(TSharedPtr<FBsonObject> BsonObject) override
+		{
+			$frombson
+		}
+
+		static $msgname GetFromJson(TSharedPtr<FJsonObject> JsonObject)
+		{
+			$msgname Result;
+			Result.FromJson(JsonObject);
+			return Result;
+		}
+
+		static $msgname GetFromBson(TSharedPtr<FBsonObject> BsonObject)
+		{
+			$msgname Result;
+			Result.FromBson(BsonObject);
+			return Result;
+		}
+
+		virtual TSharedPtr<FJsonObject> ToJsonObject() const override
+		{
+			$tojsonobject
+		}
+
+		virtual TSharedPtr<FBsonObject> ToBsonObject() const override
+		{
+			$tobsonobject
+		}
+
+		virtual FString ToString() const override
+		{
+			$tostring
+		}
+
+
+		virtual FString ToYamlString() const override
+		{
+			FString OutputString;
+			TSharedRef< TJsonWriter<> > Writer = TJsonWriterFactory<>::Create(&OutputString);
+			FJsonSerializer::Serialize(ToJsonObject().ToSharedRef(), Writer);
+			return OutputString;
+		}
+						
+	};
+	
+}

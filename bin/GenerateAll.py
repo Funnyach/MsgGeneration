@@ -11,6 +11,7 @@ parser.add_argument('--path', '-p', help='Provide the path to the ROS Package yo
 parser.add_argument('--usegui', '-g', action='store_true', help='Use this if you want to open a filedialog to pick your path.')
 parser.add_argument('--messages', '-msg', action='store_true', help='Add this argument if you want to convert only message files.')
 parser.add_argument('--services', '-srv', action='store_true', help='Add this argument if you want to convert only services files.')
+parser.add_argument('--multiple', '-multi', action='store_true', help='Add this argument if you want to run for all packages in a folder.')
 
 
 args = parser.parse_args()
@@ -26,12 +27,22 @@ elif(args.usegui and not args.path):
 else:
     parser.error('A path needs to be specified. Use the -p option to specify a path or see --help for other options.')
 
-dirpath = Path(dirpath)
 
-if(args.messages and not args.services):
-    MsgMain((dirpath / "msg"), dirpath.name)
-elif(args.services and not args.messages):
-    SrvMain((dirpath / "srv"), dirpath.name)
+def CallGenerators(mypath):
+    if(args.messages and not args.services):
+        MsgMain((mypath / "msg"), mypath.name)
+    elif(args.services and not args.messages):
+        SrvMain((mypath / "srv"), mypath.name)
+    else:
+        MsgMain((mypath / "msg"), mypath.name)
+        SrvMain((mypath / "srv"), mypath.name)
+
+if(args.multiple):
+    filenames = os.listdir(dirpath)
+
+    for filename in filenames:
+        if os.path.isdir(os.path.join(dirpath, filename)):
+            CallGenerators(Path(os.path.join(dirpath, filename)))
 else:
-    MsgMain((dirpath / "msg"), dirpath.name)
-    SrvMain((dirpath / "srv"), dirpath.name)
+    CallGenerators(Path(dirpath))
+

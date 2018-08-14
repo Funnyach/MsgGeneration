@@ -4,3 +4,5 @@ time FROSTime
 string FString
 byte int8
 duration uint32
+header std_msgs/Header
+Header std_msgs/Header

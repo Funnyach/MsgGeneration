@@ -53,7 +53,10 @@ namespace $packagename
 				return Req;
 			}
 			
-//			### TOSTRING ###
+			virtual FString ToString() const override
+			{
+				$reqtostring
+			}
 			
 			virtual TSharedPtr<FJsonObject> ToJsonObject() const
 			{
@@ -107,7 +110,10 @@ namespace $packagename
 				return Resp;
 			}			
 			
-//			### TOSTRING ###
+			virtual FString ToString() const override
+			{
+				$restostring
+			}
 			
 			virtual TSharedPtr<FJsonObject> ToJsonObject() const
 			{

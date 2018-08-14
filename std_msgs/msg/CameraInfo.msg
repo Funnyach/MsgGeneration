@@ -1,4 +1,4 @@
-std_msgs::Header header
+header header
 uint32 height
 uint32 width
 string distortion_model
@@ -8,4 +8,4 @@ double[] r
 double[] p
 uint32 binning_x
 uint32 binning_y
-sensor_msgs::RegionOfInterest roi
+geometry_msgs/RegionOfInterest roi

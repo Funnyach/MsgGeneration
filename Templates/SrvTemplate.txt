@@ -20,7 +20,7 @@ namespace $packagename
 					
 		public:
 			Request(){ }
-			$reqconstructor
+			$reqconstructor {}
 			
 			
 			$reqgetters
@@ -41,8 +41,11 @@ namespace $packagename
 				return Req;
 			}
 			
-//			### TOSTRING ###
-			
+			virtual FString ToString() const override
+			{
+				$reqtostring
+			}			
+
 			virtual TSharedPtr<FJsonObject> ToJsonObject() const
 			{
 				$reqtojsonobject
@@ -57,7 +60,7 @@ namespace $packagename
 			
 		public:
 			Response(){ }
-			$resconstructor
+			$resconstructor {}
 			
 			
 			$resgetters
@@ -78,8 +81,11 @@ namespace $packagename
 				return Resp;
 			}			
 			
-//			### TOSTRING ###
-			
+			virtual FString ToString() const override
+			{
+				$restostring
+			}
+
 			virtual TSharedPtr<FJsonObject> ToJsonObject() const
 			{
 				$restojsonobject
