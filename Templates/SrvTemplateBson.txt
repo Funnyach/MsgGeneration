@@ -21,7 +21,7 @@ namespace $packagename
 					
 		public:
 			Request(){ }
-			$reqconstructor
+			$reqconstructor { }
 			
 			
 			$reqgetters
@@ -77,7 +77,7 @@ namespace $packagename
 			
 		public:
 			Response(){ }
-			$resconstructor
+			$resconstructor { }
 			
 			
 			$resgetters
